@@ -52,3 +52,24 @@ def get_eigen_vectors(matrix, eig_vals):
     # Mengembalikan np.array berisi vektor-vektor eigen
     return eig_vectors
 
+def get_eigen(mat):
+    n, m = mat.shape
+    q = np.random.rand(n, m)
+    q, r = np.linalg.qr(q)
+    max_shape = max(n,m)
+
+    error = (2 * np.exp(0.01 * max(n,m))) if (max_shape <= 1000) else (10 ** (4 + (max_shape / 1000)))
+
+    r_prev = r
+    dot = np.dot(mat, q)
+    q, r = np.linalg.qr(dot)
+    diff = np.abs((r - r_prev).sum())
+    while (diff > error) :
+        r_prev = r
+        dot = np.dot(mat, q)
+        q, r = np.linalg.qr(dot)
+        diff = np.abs((r - r_prev).sum())
+
+    eig_vals = np.diag(r)
+    eig_vals = eig_vals[np.argsort(-eig_vals)]
+    return np.diag(r), q
