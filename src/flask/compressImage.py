@@ -79,7 +79,7 @@ def compressImage(image, percentage):
 
     
     newImage = Image.merge(''.join(bands), tuple(compressedImageChannels))
-    #newImage.save(imageName +"compressed"+str(r)+imageExt)
+    newImage.save('test.jpg')
     encodedImage = np.arange(newImage, dtype=np.float64)
     return base64.b64encode(encodedImage)
 

@@ -46,8 +46,12 @@ export default {
             namafile: '',
             imageURL: '',
             imageURL2: '',
-            pathJson: 'http://localhost:5000/ping',
-            base64: ''
+            pathFlask: 'http://localhost:5000/ping',
+            base64: '',
+            pathJson: 'http://localhost:3000/img',
+            test: {
+                base64: ''
+            }
         }
     },
     computed:{
@@ -78,20 +82,26 @@ export default {
             this.namafile = listFile[0].name
             this.statusUpload = UPLOADED_STATUS
             const fileReader = new FileReader()
+            fileReader.readAsDataURL(this.fileUpload)
             fileReader.addEventListener('load', ()=>{
                 this.imageURL = fileReader.result
             })
-            fileReader.readAsDataURL(this.fileUpload)
-            console.log(listFile[0])
-            console.log(this.base64)
+            console.log(this.fileUpload)
+            console.log(this.imageURL)
 
         },
         compress(){
             this.statusUpload = CONVERTING_STATUS
+            this.test.base64 = this.imageURL
             //const img = new Blob(this.fileUpload,{type : 'image'})
-            axios.post(this.pathJson,this.fileUpload,this.percentage)
+            fetch('http://localhost:3000/image',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify(this.test)
+            }).catch(err=>console.log(err.message))
+            /*axios.post(this.pathJson,this.fileUpload,this.percentage)
                 .then(()=>{this.getImg()})
-                .catch(err=>{console.log(err.message),this.reset()})
+                .catch(err=>{console.log(err.message),this.reset()})*/
         },
         getImg(){
             axios.get(pathPy)
