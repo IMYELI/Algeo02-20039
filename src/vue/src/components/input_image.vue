@@ -21,8 +21,12 @@
         <div v-if="!isSuccess">
             <div class="input-percentage">
                 <p>Persentase compress</p>
-                <input type="text" v-model = "percentage">
-                <p>%</p>
+                <input type="range" min="0" max="100" step="1" v-model = "percentage">
+                <div class='persenan'>
+                    <input type="text" v-model = "percentage">
+                    <p>%</p>
+                </div>
+                
             </div>
             <div>
                 <button :disabled="!isUploaded">Compress</button> 
@@ -30,6 +34,7 @@
         </div> 
         <div class="reset_button" v-if="isSuccess">
             <span @click="reset" class="fake_button">Compress Again</span>
+            <span @click="download" class="fake_button">Download image</span>
         </div>       
         
     </form>
@@ -51,7 +56,7 @@ export default {
             namafile: '',
             imageURL: '',
             imageURL2: '../assets/test.jpg',
-            pathFlask: 'http://localhost:5000/ping',
+            pathFlask: 'http://localhost:5000/compress',
             base64: '',
             pathJson: 'http://localhost:3000/image',
             test: {}
@@ -90,11 +95,10 @@ export default {
             this.statusUpload = UPLOADED_STATUS
             const fileReader = new FileReader()
             fileReader.readAsDataURL(this.fileUpload)
-            console.log(this.fileUpload)
+            console.log(this.percentage)
             fileReader.addEventListener('load', ()=>{
                 this.imageURL = fileReader.result
                 this.test = {'base64' : this.imageURL, 'percentage' : this.percentage}
-                console.log(this.imageURL)
                 fetch('http://localhost:3000/image',{
                     method:'POST',
                     headers:{'Content-Type':'application/json'},
@@ -103,7 +107,6 @@ export default {
             })
             
             
-            console.log(this.test.length)
 
         },
         compress(){
@@ -130,6 +133,16 @@ export default {
                     this.imageURL2 = res.data
                 })
                 .catch((error)=>console.log(error.message))
+        },
+        download(){
+            var fileURL = window.URL.createObjectURL(this.fileGet)
+            var fileLink = document.createElement('a')
+            fileLink.href = fileURL
+            this.namafile = this.namafile.split('.').slice(0,-1).join('.')
+            this.namafile = this.namafile + '_Compressed.jpg'
+            fileLink.setAttribute('download',this.namafile)
+            document.body.appendChild(fileLink)
+            fileLink.click()
         }
         
         
@@ -186,17 +199,24 @@ export default {
         font-size: 2em;
     }
     .input-percentage{
-        display: flex;
+        display: block;
         padding-top: 20px;
-        text-align: center;
     }
     .input-percentage p{
         padding-right: 10px;
     }
+    .persenan{
+        display: flex;
+    }
+    .persenan input{
+        width: 4%;
+        text-align: right;
+        margin-right: 5px;
+    }
     .input-percentage input {
         padding: 1px;
         border: 1;
-        width: 2.5%;
+
         height: 20px;
         display: block;
         margin-top: 10px;
@@ -214,6 +234,8 @@ export default {
         border: 0px;
         padding: 10px;
         cursor: pointer;
+        margin-top: 10px;
+        display: block;
     }
     .image-wrapper{
         max-height: 200px;
@@ -233,7 +255,7 @@ export default {
     }
     .reset_button{
         margin: 20px auto;
-        width: 50%;
+        width: 20%;
         text-align: center;
     }
 </style>

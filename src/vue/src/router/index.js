@@ -9,7 +9,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/ping',
+    path: '/image',
     name: 'Ping',
     component: Ping,
   }

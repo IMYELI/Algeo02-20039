@@ -2,10 +2,8 @@ import numpy as np
 import base64
 from PIL import Image
 import eigen
-import re
-from PIL import Image
-from io import BytesIO
-import json
+import io
+from imageio import imread
 
 def openImage(imgPath):
     imgOriginal = imgPath
@@ -61,12 +59,10 @@ def compressImage(image, percentage):
     #imageInput = "misaka10032.jpg"
     #imageName = ''.join(imageInput.split('.')[:-1])
     #imageExt = '.' + imageInput.split('.')[-1]
-    imageInput = Image.open(BytesIO(base64.b64decode(str(image))))
-    #imageInput = np.frombuffer(decodedImage, dtype=np.float64)
+    decodedImage = base64.b64decode(image)
+    imageInput = Image.open(io.BytesIO(decodedImage))
     channels, alpha, hasAlpha, original, bands = openImage(imageInput)
-    row, col = np.shape(channels[0])
-    r = int(min(row, col) * (percentage * 0.01))
-    
+    r = int(np.linalg.matrix_rank(channels[0]) * (percentage * 0.01))
 
     print(f"r = {r}")
 
@@ -79,11 +75,11 @@ def compressImage(image, percentage):
     for compressedChannel in compressedChannels:
         compressedImageChannels.append(Image.fromarray(compressedChannel, mode=None))
 
-    if hasAlpha:
-        compressedImageChannels.append(alpha)
+    #if hasAlpha:
+        #compressedImageChannels.append(alpha)
 
     
-    newImage = Image.merge(''.join(bands), tuple(compressedImageChannels))
+    newImage = Image.merge('RGB', tuple(compressedImageChannels))
     newImage.save('../vue/src/assets/test.jpg')
 
 
