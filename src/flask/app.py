@@ -21,8 +21,9 @@ def ping_pong():
     base = data1["image"][0]['base64']
     percentage = data1["image"][0]['percentage'] 
     percentage = int(percentage)
+    namaFile = data1["image"][0]['namaFile']
     base2 = base.split(',', 1)[1]
-    compressImage(base2,percentage)    
-    return send_file('../vue/src/assets/test.jpg') #jsonify('abc') 
+    imageExt = compressImage(base2,percentage,namaFile)    
+    return send_file('../vue/src/assets/test' + imageExt) #jsonify('abc') 
 if __name__ == '__main__':
     app.run()

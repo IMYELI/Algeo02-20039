@@ -55,10 +55,11 @@ def compressSingleChannel(channel, rank):
     return np.clip(compressed, 0, 255).astype('uint8')
 
 
-def compressImage(image, percentage):
+def compressImage(image, percentage,imageName):
     #imageInput = "misaka10032.jpg"
     #imageName = ''.join(imageInput.split('.')[:-1])
     #imageExt = '.' + imageInput.split('.')[-1]
+    imageExt = '.' + imageName.split('.')[-1]
     decodedImage = base64.b64decode(image)
     imageInput = Image.open(io.BytesIO(decodedImage))
     channels, alpha, hasAlpha, original, bands = openImage(imageInput)
@@ -74,13 +75,26 @@ def compressImage(image, percentage):
     compressedImageChannels = []
     for compressedChannel in compressedChannels:
         compressedImageChannels.append(Image.fromarray(compressedChannel, mode=None))
+        
+    if len(compressedImageChannels) != 1 :
+        if hasAlpha:
+            newImage = Image.merge(''.join(bands)[:-1], tuple(compressedImageChannels))
+            newImage.save("../vue/src/assets/test.jpg")
+            return ".jpg"
 
+        else :
+            newImage = Image.merge(''.join(bands), tuple(compressedImageChannels))
+            newImage.save("../vue/src/assets/test" + imageExt)
+    else :
+        newImage = compressedImageChannels[0]
+        newImage = newImage.convert(bands[0])
+        newImage.save("../vue/src/assets/test"+imageExt)
+
+    return imageExt
     #if hasAlpha:
         #compressedImageChannels.append(alpha)
 
     
-    newImage = Image.merge('RGB', tuple(compressedImageChannels))
-    newImage.save('../vue/src/assets/test.jpg')
 
 
     

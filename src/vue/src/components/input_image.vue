@@ -16,11 +16,15 @@
                 <p>Hasil compress</p>
             </div>
             <p v-if="isInitial||isFailed">Klik disini atau drop file anda langsung kesini</p>
-            <img v-if = "isConverting" src="../assets/pekora_loading.gif" class = "loading_screen">
+            <div :class="{converting : isConverting}">
+                <img v-if = "isConverting" src="../assets/pekora_loading.gif" class = "loading_screen">
+                <h2 v-if="isConverting">Converting...</h2>
+            </div>
+            
         </div>
         <div v-if="!isSuccess">
             <div class="input-percentage">
-                <p>Persentase compress</p>
+                <p>Persentase compress (berdasarkan rank awal gambar)</p>
                 <input :disabled="!(isUploaded ||isInitial)" type="range" min="0" max="100" step="1" v-model = "percentage">
                 <div class='persenan'>
                     <input :disabled="!(isUploaded || isInitial)" type="text" v-model = "percentage">
@@ -102,7 +106,7 @@ export default {
             console.log(this.percentage)
             fileReader.addEventListener('load', ()=>{
                 this.imageURL = fileReader.result
-                this.test = {'base64' : this.imageURL, 'percentage' : this.percentage}
+                this.test = {'base64' : this.imageURL, 'percentage' : this.percentage,'namaFile' : this.fileUpload.name}
                 fetch('http://localhost:3000/image',{
                     method:'POST',
                     headers:{'Content-Type':'application/json'},
@@ -152,11 +156,11 @@ export default {
             fileLink.click()
         },
         startTimer(){
-            this.timer = setInterval(() => {
-                this.time += 100
-            }, (100));
+            this.time = 0
+            this.timer = Date.now()
         },
         stopTimer(){
+            this.time = Date.now()-this.timer
             clearInterval(this.timer)
         }
         
@@ -276,6 +280,11 @@ export default {
     }
     .Time{
         color:red;
+    }
+    .converting{
+        display: flex;
+        width: 50%;
+        margin: auto;
     }
 </style>
 
