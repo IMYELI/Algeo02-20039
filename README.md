@@ -16,10 +16,10 @@
 
 
 ## Screenshots
-![Example screenshot](./doc/image/page_1.png)
-![Example screenshot](./doc/image/page_2.png)
-![Example screenshot](./doc/image/page_3.png)
-![Example screenshot](./doc/image/page_4.png)
+![Example screenshot](doc/image/page_1.png)
+![Example screenshot](doc/image/page_2.png)
+![Example screenshot](doc/image/page_3.png)
+![Example screenshot](doc/image/page_4.png)
 
 ## Setup
 Dependencies:
