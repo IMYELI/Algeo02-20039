@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from compressImage import compressImage
+import json
 # configuration
 DEBUG = True
 
@@ -14,9 +15,17 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 # sanity check route
 @app.route('/ping', methods=['GET','POST'])
-def ping_pong(base,percentage):
-    return  compressImage(base,percentage)
-
+def ping_pong():
+    f = open('D:/Tugas Andre/ITB/IF/Semester 3/Aljabar Linear dan Geometri/Tubes 2/Algeo02-20039/src/vue/Data/image.json')
+    data1 = json.load(f)
+    base = data1["image"][0]['base64']
+    print(base)
+    percentage = 80 
+    base2 = base.split(',', 1)[1]
+    flag = base.split(',',1)[0]
+    res = flag +','+ str(compressImage(base2,percentage))
+    print(res)
+    return res
 
 if __name__ == '__main__':
     app.run()
