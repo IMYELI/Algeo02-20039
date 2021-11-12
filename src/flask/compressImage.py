@@ -2,9 +2,13 @@ import numpy as np
 import base64
 from PIL import Image
 import eigen
+import re
+from PIL import Image
+from io import BytesIO
+import json
 
 def openImage(imgPath):
-    imgOriginal = Image.open(imgPath)
+    imgOriginal = imgPath
     im = np.array(imgOriginal)
     imgChannels = []
     bands = imgOriginal.getbands()
@@ -57,11 +61,12 @@ def compressImage(image, percentage):
     #imageInput = "misaka10032.jpg"
     #imageName = ''.join(imageInput.split('.')[:-1])
     #imageExt = '.' + imageInput.split('.')[-1]
-    decodedImage = base64.decodebytes(image)
-    imageInput = np.frombuffer(decodedImage, dtype=np.float64)
+    imageInput = Image.open(BytesIO(base64.b64decode(str(image))))
+    #imageInput = np.frombuffer(decodedImage, dtype=np.float64)
     channels, alpha, hasAlpha, original, bands = openImage(imageInput)
     row, col = np.shape(channels[0])
-    r = min(row, col) // (percentage * 0.01)
+    r = int(min(row, col) * (percentage * 0.01))
+    
 
     print(f"r = {r}")
 
@@ -80,7 +85,8 @@ def compressImage(image, percentage):
     
     newImage = Image.merge(''.join(bands), tuple(compressedImageChannels))
     newImage.save('test.jpg')
-    encodedImage = np.arange(newImage, dtype=np.float64)
-    return base64.b64encode(encodedImage)
+    encodedImage = base64.b64encode(np.array(newImage))
+    return encodedImage
+
 
     

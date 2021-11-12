@@ -1,13 +1,13 @@
 <template>
     
-    <form @submit.prevent="compress">
+    <form @submit.prevent="compress" action="">
         <div :class="{'input-wrapper': isInitial}">
             <input v-if="isInitial" type="file" accept="image/*" class="box-input" @change="fileSelected($event.target.name,$event.target.files)">
             <div v-if="isUploaded" class="image-wrapper">
                 <img :src="imageURL"><span v-if="isUploaded" class="material-icons" @click="reset()">update</span>
                 <p>{{ namafile }}</p>
-                <img :src="imageURL2">
             </div>
+            <img :src="imageURL2">
             <p v-if="isInitial">Klik disini atau drop file anda langsung kesini</p>
         </div>
         <div class="input-percentage">
@@ -98,7 +98,15 @@ export default {
                 method:'POST',
                 headers:{'Content-Type':'application/json'},
                 body: JSON.stringify(this.test)
-            }).catch(err=>console.log(err.message))
+            }).then(axios.get(this.pathFlask)
+                .then((res)=>{
+                    this.imageURL2 = res.data
+                    console.log(this.imageURL2)
+
+                })
+                .catch(err=>console.log(err.message))
+            )
+            .catch(err=>console.log(err.message))
             /*axios.post(this.pathJson,this.fileUpload,this.percentage)
                 .then(()=>{this.getImg()})
                 .catch(err=>{console.log(err.message),this.reset()})*/
