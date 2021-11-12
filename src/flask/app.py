@@ -24,9 +24,5 @@ def ping_pong():
     base2 = base.split(',', 1)[1]
     compressImage(base2,percentage)    
     return send_file('../vue/src/assets/test.jpg') #jsonify('abc') 
-
-@app.route('/download',methods=['GET','POST'])
-def download():
-    return send_file('../vue/src/assets/test.jpg')
 if __name__ == '__main__':
     app.run()

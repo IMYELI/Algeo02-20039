@@ -21,9 +21,9 @@
         <div v-if="!isSuccess">
             <div class="input-percentage">
                 <p>Persentase compress</p>
-                <input type="range" min="0" max="100" step="1" v-model = "percentage">
+                <input :disabled="!(isUploaded ||isInitial)" type="range" min="0" max="100" step="1" v-model = "percentage">
                 <div class='persenan'>
-                    <input type="text" v-model = "percentage">
+                    <input :disabled="!(isUploaded || isInitial)" type="text" v-model = "percentage">
                     <p>%</p>
                 </div>
                 
@@ -36,7 +36,9 @@
             <span @click="reset" class="fake_button">Compress Again</span>
             <span @click="download" class="fake_button">Download image</span>
         </div>       
-        
+        <div v-if="isSuccess">
+            <p class='Time'>Time taken : {{time}} seconds</p>
+        </div>
     </form>
 </template>
 
@@ -50,16 +52,18 @@ export default {
         return{
             fileUpload:[],
             fileGet: [],
-            errorUpload: null,
             statusUpload:INITIAL_STATUS,
             percentage: 80,
             namafile: '',
+            namafile2: '',
             imageURL: '',
             imageURL2: '../assets/test.jpg',
             pathFlask: 'http://localhost:5000/compress',
             base64: '',
             pathJson: 'http://localhost:3000/image',
-            test: {}
+            test: {},
+            time: 0,
+            timer: null
         }
     },
     computed:{
@@ -83,7 +87,7 @@ export default {
         reset(){
             this.fileUpload=[];
             this.statusUpload = INITIAL_STATUS;
-            this.errorUpload = null;
+            this.time = 0
             fetch(this.pathJson + '/1',{
                 method:'DELETE'
             })
@@ -111,8 +115,11 @@ export default {
         },
         compress(){
             this.statusUpload = CONVERTING_STATUS
+            this.startTimer()
             axios.get(this.pathFlask,{ responseType: 'blob'})
                 .then((res)=>{
+                    this.stopTimer()
+                    this.time = this.time /1000
                     this.fileGet = res.data
                     console.log(this.fileGet)
                     const fileReader = new FileReader()
@@ -138,11 +145,19 @@ export default {
             var fileURL = window.URL.createObjectURL(this.fileGet)
             var fileLink = document.createElement('a')
             fileLink.href = fileURL
-            this.namafile = this.namafile.split('.').slice(0,-1).join('.')
-            this.namafile = this.namafile + '_Compressed.jpg'
-            fileLink.setAttribute('download',this.namafile)
+            this.namafile2 = this.namafile.split('.').slice(0,-1).join('.')
+            this.namafile2 = this.namafile2 + '_Compressed.jpg'
+            fileLink.setAttribute('download',this.namafile2)
             document.body.appendChild(fileLink)
             fileLink.click()
+        },
+        startTimer(){
+            this.timer = setInterval(() => {
+                this.time += 100
+            }, (100));
+        },
+        stopTimer(){
+            clearInterval(this.timer)
         }
         
         
@@ -244,6 +259,7 @@ export default {
     }
     .image-wrapper img{
         max-height: 200px;
+        max-width: 450px;
     }
     .loading_screen {
         background: lightblue;
@@ -257,6 +273,9 @@ export default {
         margin: 20px auto;
         width: 20%;
         text-align: center;
+    }
+    .Time{
+        color:red;
     }
 </style>
 
