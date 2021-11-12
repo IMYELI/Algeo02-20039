@@ -81,9 +81,11 @@ def compressImage(image, percentage,imageName):
         
     if len(compressedImageChannels) != 1 :
         if hasAlpha:
-            newImage = Image.merge(''.join(bands)[:-1], tuple(compressedImageChannels))
-            newImage.save("../vue/src/assets/test.jpg")
-            return ".jpg"
+            compressedImageChannels.append(alpha)
+            newImage = Image.merge(''.join(bands), tuple(compressedImageChannels))
+            newImage = newImage.convert("P", palette=Image.ADAPTIVE)
+            newImage.save("../vue/src/assets/test"+imageExt)
+            return imageExt
 
         else :
             newImage = Image.merge(''.join(bands), tuple(compressedImageChannels))
