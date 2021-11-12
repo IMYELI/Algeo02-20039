@@ -84,9 +84,7 @@ def compressImage(image, percentage):
 
     
     newImage = Image.merge(''.join(bands), tuple(compressedImageChannels))
-    newImage.save('test.jpg')
-    encodedImage = base64.b64encode(np.array(newImage))
-    return encodedImage
+    newImage.save('../vue/src/assets/test.jpg')
 
 
     
