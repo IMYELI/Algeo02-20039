@@ -138,13 +138,6 @@ export default {
                 .catch(err=>{console.log(err.message),this.reset()})
 
         },
-        getImg(){
-            axios.get(pathPy)
-                .then((res)=>{
-                    this.imageURL2 = res.data
-                })
-                .catch((error)=>console.log(error.message))
-        },
         download(){
             var fileURL = window.URL.createObjectURL(this.fileGet)
             var fileLink = document.createElement('a')

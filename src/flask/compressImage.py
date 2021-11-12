@@ -10,6 +10,9 @@ def openImage(imgPath):
     im = np.array(imgOriginal)
     imgChannels = []
     bands = imgOriginal.getbands()
+    if len(''.join(bands)) == 1:
+        imgOriginal = imgOriginal.convert("RGBA")
+        bands = imgOriginal.getbands()
     imgAlpha = np.nan
     hasAlphaValue = False
     for band in bands:
