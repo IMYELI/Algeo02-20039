@@ -52,24 +52,37 @@ def get_eigen_vectors(matrix, eig_vals):
     # Mengembalikan np.array berisi vektor-vektor eigen
     return eig_vectors
 
+# Fungsi untuk mendapatkan nilai-nilai dan vektor-vektor eigen dari suatu matriks sekaligus
+# Input adalah suatu matrix dalan bentuk numpy.array
+# Output adalah tuple dengan suatu numpy.array berisi nilai-nilai eigen dan suatu numpy.array berisi array vektor-vektor eigen
+# Metode yang digunakan adalah Orthogonal Iteration, suatu ekstensi dari Power Method
 def get_eigen(mat):
+    # Menyimpan ukuran matriks
     n, m = mat.shape
+    # Inisialisasi matriks Q sesuai ukuran dan berisi random
     q = np.random.rand(n, m)
+    # Lakukan QR decomposition terhadap matriks random untuk mendapat initial Q matrix yang sesuai
     q, r = np.linalg.qr(q)
+    # Menyimpan dimensi matriks terbesar
     max_shape = max(n,m)
-
-    error = (2 * np.exp(0.01 * max(n,m))) if (max_shape <= 1000) else (10 ** (4 + (max_shape / 1000)))
-
+    # Menentukan toleransi error dari hasil untuk mengehentikan iterasi di saat yang tepat
+    # Error dihitung berdasarkan ukuran matriks dimana berlaku 4*e^max_shape untuk < 1000 dan 10^(max_shape/1000) untuk sisanya.
+    # Error ini sangat krusial untuk mengoptimalkan algoritma agar tidak melakukan terlalu sedikit atau terlalu banyak iterasi.
+    error = (2 * np.exp(0.01 * max_shape)) if (max_shape <= 1000) else (10 ** (4 + (max_shape / 1000)))
+    # Menyimpan Matriks r untuk perbandingan
     r_prev = r
+    # Melakukan iterasi pertama
     dot = np.dot(mat, q)
     q, r = np.linalg.qr(dot)
+    # Bandingkan matriks R yang berisi nilai eigen dengan iterasi sebelumnya
     diff = np.abs((r - r_prev).sum())
+    # Bandingkan selisih dengan error yang ditoleransi
     while (diff > error) :
+        # Melakukan iterasi selanjutnya
         r_prev = r
         dot = np.dot(mat, q)
         q, r = np.linalg.qr(dot)
+        # Bandingkan kembali dengan iterasi sebelumnya
         diff = np.abs((r - r_prev).sum())
-
-    eig_vals = np.diag(r)
-    eig_vals = eig_vals[np.argsort(-eig_vals)]
+    # Mengembalikan nilai eigen dalam diagonal matriks R dan vektor eigen yang merupakan kolom-kolom matriks Q
     return np.diag(r), q
