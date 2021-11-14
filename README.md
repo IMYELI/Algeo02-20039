@@ -36,7 +36,7 @@ Dependencies:
 
 Setting versi virtual environment python sesuai dengan versi python anda pada src/flask/pyvenv.cfg lalu include site-packages yang anda miliki agar bisa menggunakan pip
 
-Aktifkan virtual environment di python pada folder src/flask/env/Scripts lalu run dengan ./activate dan kembali ke folder flask
+Aktifkan virtual environment di python pada folder src/flask/env/Scripts lalu run dengan ./activate (jika tidak bisa, gunakan .\activate) dan kembali ke folder flask
 Install menggunakan pip install module python:
 1. pip install numpy
 2. pip install pillow
