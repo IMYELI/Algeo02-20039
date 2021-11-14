@@ -34,6 +34,7 @@ Dependencies:
     c. scipy  
     d. base64  
 
+Setting versi virtual environment python sesuai dengan versi python anda pada src/flaskpyvenv.cfg lalu include site-packages yang anda miliki agar bisa menggunakan pip
 
 Aktifkan virtual environment di python pada folder src/flask/env/Scripts lalu run dengan ./activate dan kembali ke folder flask
 Install menggunakan pip install module python:
@@ -47,7 +48,9 @@ Install menggunakan pip install module python:
 Setup aplikasi
 1. Download nodejs
 2. Setelah menginstall nodejs, install vue menggunakan terminal OS dengan command "npm install vue"
-3. Masuk ke folder yang ingin digunakan di terminal
+3. Install vue-cli-service dengan command npm install -g @vue/cli
+4. Install axios dengan command npm install axios pada folder src/vue
+5. Install json dengan command npm install json-server
 
 Untuk start program ini, kita perlu menyalakan 3 server yaitu flask,vue, dan json dengan run command di 3 terminal berbeda sebagai berikut:
 1. flask  
