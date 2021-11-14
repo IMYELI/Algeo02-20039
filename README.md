@@ -54,11 +54,11 @@ Untuk start program ini, kita perlu menyalakan 3 server yaitu flask,vue, dan jso
 Setelah menyalakan ketiga server di atas, buka server yang disediakan oleh vue yaitu " http://localhost:8080/"
 
 ## Room for improvement
-1. Mempertahankan transparansi file png
-2. Mempercepat kompresi
-3. Penentuan persentase kompresi yang lebih akurat
-4. Input file dengan drag and drop masih belum dibatasi jenis filenya
-5. Jika menerima input yang error server akan langsung error dan harus di start ulang
+1. Mempercepat kompresi
+2. Penentuan persentase kompresi yang lebih akurat
+3. Input file dengan drag and drop masih belum dibatasi jenis filenya
+4. Jika menerima input yang error server akan langsung error dan harus di start ulang
+5. Menambahkan BGM Pekora
 
 ## Acknowledgements
 - Project ini dilakukan untuk pemenuhan tugas besar 2 Aljabar Linear dan Geometri 2021
