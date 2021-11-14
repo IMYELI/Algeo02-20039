@@ -20,9 +20,9 @@
 ![Example screenshot](doc/image/page_2.jpg)
 ![Example screenshot](doc/image/page_3.jpg)
 ![Example screenshot](doc/image/page_4.jpg)
-
+``` 
 ## Setup
-Dependencies:
+Dependencies:  
 -nodejs  
 -vuejs  
 -flask  
@@ -34,7 +34,7 @@ Dependencies:
     c. scipy  
     d. base64  
 
-Setting versi virtual environment python sesuai dengan versi python anda pada src/flaskpyvenv.cfg lalu include site-packages yang anda miliki agar bisa menggunakan pip
+Setting versi virtual environment python sesuai dengan versi python anda pada src/flask/pyvenv.cfg lalu include site-packages yang anda miliki agar bisa menggunakan pip
 
 Aktifkan virtual environment di python pada folder src/flask/env/Scripts lalu run dengan ./activate dan kembali ke folder flask
 Install menggunakan pip install module python:
@@ -66,6 +66,7 @@ Untuk start program ini, kita perlu menyalakan 3 server yaitu flask,vue, dan jso
 3. json  
     a. cd src/vue  
     b. npx json-server --watch Data/image.json cd src/vue  
+```
 
 ## Usage
 Setelah menyalakan ketiga server di atas, buka server yang disediakan oleh vue yaitu " http://localhost:8080/"
