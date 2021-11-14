@@ -5,9 +5,9 @@ import eigen
 import io
 from imageio import imread
 
-def openImage(imgPath):
-    imgOriginal = imgPath
-    im = np.array(imgOriginal)
+def openImage(img):
+    imgOriginal = img
+
     imgChannels = []
     bands = imgOriginal.getbands()
     if len(''.join(bands)) == 1:
@@ -22,7 +22,7 @@ def openImage(imgPath):
         else:
             imgChannels.append(imgOriginal.getchannel(band))
 
-    return imgChannels, imgAlpha, hasAlphaValue, imgOriginal, bands
+    return imgChannels, imgAlpha, hasAlphaValue, bands
 
 
 def getSVDMatrices(m, rank):
@@ -65,7 +65,7 @@ def compressImage(image, percentage,imageName):
     imageExt = '.' + imageName.split('.')[-1]
     decodedImage = base64.b64decode(image)
     imageInput = Image.open(io.BytesIO(decodedImage))
-    channels, alpha, hasAlpha, original, bands = openImage(imageInput)
+    channels, alpha, hasAlpha, bands = openImage(imageInput)
     r = int(np.linalg.matrix_rank(channels[0]) * (percentage * 0.01))
 
     print(f"r = {r}")
