@@ -28,12 +28,14 @@ Dependencies:
 -flask  
 -axios  
 -json-server  
--python 3.2:  
+-python 3.1:  
     a. numpy  
     b. pillow  
     c. scipy  
     d. base64  
 
+
+Aktifkan virtual environment di python pada folder src/flask/env/Scripts lalu run dengan ./activate dan kembali ke folder flask
 Install menggunakan pip install module python:
 1. pip install numpy
 2. pip install pillow
@@ -48,17 +50,17 @@ Setup aplikasi
 3. Masuk ke folder yang ingin digunakan di terminal
 
 Untuk start program ini, kita perlu menyalakan 3 server yaitu flask,vue, dan json dengan run command di 3 terminal berbeda sebagai berikut:
-1. flask
+1. flask  
     a. cd src/flask/env/scripts  
     b.  ./activate  
     c. cd ../..  
     d. python app.py  
 
-2. vue
+2. vue  
     a. cd src/vue  
     b. npm run serve  
 
-3. json
+3. json  
     a. cd src/vue  
     b. npx json-server --watch Data/image.json cd src/vue  
 
