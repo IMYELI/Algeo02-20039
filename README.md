@@ -23,42 +23,56 @@
 
 ## Setup
 Dependencies:
--nodejs 
--vuejs
--flask
--axios
--json-server
--python:
-    a. numpy
-    b. matplotlib
-    c. pillow
-    d. scipy
-    e. base64
+-nodejs  
+-vuejs  
+-flask  
+-axios  
+-json-server  
+-python 3.1:  
+    a. numpy  
+    b. pillow  
+    c. scipy  
+    d. base64  
+
+
+Aktifkan virtual environment di python pada folder src/flask/env/Scripts lalu run dengan ./activate dan kembali ke folder flask
+Install menggunakan pip install module python:
+1. pip install numpy
+2. pip install pillow
+3. pip install scipy
+4. pip install base64
+5. pip install flask
+6. pip install flask-cors
+
+Setup aplikasi
+1. Download nodejs
+2. Setelah menginstall nodejs, install vue menggunakan terminal OS dengan command "npm install vue"
+3. Masuk ke folder yang ingin digunakan di terminal
 
 Untuk start program ini, kita perlu menyalakan 3 server yaitu flask,vue, dan json dengan run command di 3 terminal berbeda sebagai berikut:
-1. flask
-    a. cd src/flask/env/scripts
-    b.  ./activate
-    c. cd ../..
-    d. python app.py
+1. flask  
+    a. cd src/flask/env/scripts  
+    b.  ./activate  
+    c. cd ../..  
+    d. python app.py  
 
-2. vue
-    a. cd src/vue
-    b. npm run serve
+2. vue  
+    a. cd src/vue  
+    b. npm run serve  
 
-3. json
-    a. cd src/vue
-    b. npx json-server --watch Data/image.json cd src/vue
+3. json  
+    a. cd src/vue  
+    b. npx json-server --watch Data/image.json cd src/vue  
 
 ## Usage
 Setelah menyalakan ketiga server di atas, buka server yang disediakan oleh vue yaitu " http://localhost:8080/"
 
 ## Room for improvement
-1. Mempertahankan transparansi file png
-2. Mempercepat kompresi
-3. Penentuan persentase kompresi yang lebih akurat
-4. Input file dengan drag and drop masih belum dibatasi jenis filenya
-5. Jika menerima input yang error server akan langsung error dan harus di start ulang
+1. Mempercepat kompresi
+2. Penentuan persentase kompresi yang lebih akurat
+3. Input file dengan drag and drop masih belum dibatasi jenis filenya
+4. Jika menerima input yang error server akan langsung error dan harus di start ulang
+5. Menambahkan BGM Pekora
 
 ## Acknowledgements
 - Project ini dilakukan untuk pemenuhan tugas besar 2 Aljabar Linear dan Geometri 2021

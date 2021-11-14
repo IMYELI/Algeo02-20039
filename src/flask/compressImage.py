@@ -3,7 +3,6 @@ import base64
 from PIL import Image
 import eigen
 import io
-from imageio import imread
 
 # Fungsi untuk memecah channel gambar
 def openImage(img):
