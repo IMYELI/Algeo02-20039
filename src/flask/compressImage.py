@@ -5,9 +5,9 @@ import eigen
 import io
 from imageio import imread
 
-def openImage(imgPath):
-    imgOriginal = imgPath
-    im = np.array(imgOriginal)
+def openImage(img):
+    imgOriginal = img
+
     imgChannels = []
     bands = imgOriginal.getbands()
     if len(''.join(bands)) == 1:
