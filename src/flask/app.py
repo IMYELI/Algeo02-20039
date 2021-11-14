@@ -16,7 +16,7 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 # sanity check route
 @app.route('/compress', methods=['GET','POST'])
 def ping_pong():
-    f = open('D:/Tugas Andre/ITB/IF/Semester 3/Aljabar Linear dan Geometri/Tubes 2/Algeo02-20039/src/vue/Data/image.json')
+    f = open('../vue/Data/image.json')
     data1 = json.load(f)
     base = data1["image"][0]['base64']
     percentage = data1["image"][0]['percentage'] 
@@ -24,6 +24,7 @@ def ping_pong():
     namaFile = data1["image"][0]['namaFile']
     base2 = base.split(',', 1)[1]
     imageExt = compressImage(base2,percentage,namaFile)    
+    print(imageExt)
     return send_file('../vue/src/assets/test' + imageExt) #jsonify('abc') 
 if __name__ == '__main__':
     app.run()
