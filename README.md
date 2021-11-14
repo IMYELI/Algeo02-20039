@@ -48,9 +48,9 @@ Install menggunakan pip install module python:
 Setup aplikasi
 1. Download nodejs
 2. Setelah menginstall nodejs, install vue menggunakan terminal OS dengan command "npm install vue"
-3. Install vue-cli-service dengan command npm install -g @vue/cli
-4. Install axios dengan command npm install axios pada folder src/vue
-5. Install json dengan command npm install json-server
+3. Install vue-cli-service dengan command 'npm install -g @vue/cli' 
+4. Install axios dengan command 'npm install axios' pada folder src/vue
+5. Install json dengan command 'npm install json-server'
 
 Untuk start program ini, kita perlu menyalakan 3 server yaitu flask,vue, dan json dengan run command di 3 terminal berbeda sebagai berikut:
 1. flask  
@@ -61,11 +61,12 @@ Untuk start program ini, kita perlu menyalakan 3 server yaitu flask,vue, dan jso
 
 2. vue  
     a. cd src/vue  
-    b. npm run serve  
+    b. 'npm run serve'  
+    NOTES : Jika npm run serve tidak bisa dijalankan dan muncul error message yang mengatakan anda belum menginstall vue-cli maka coba delete folder node_modules yang ada pada Folder Algeo02-20039 lalu run 'npm run serve' lagi 
 
 3. json  
     a. cd src/vue  
-    b. npx json-server --watch Data/image.json cd src/vue  
+    b. 'npx json-server --watch Data/image.json'  
 ```
 
 ## Usage
