@@ -71,8 +71,8 @@ export default {
             ext : ''
         }
     },
-    computed:{
-        isInitial(){
+    computed:{          //Pengecekan status upload gambar
+        isInitial(){            
             return this.statusUpload === INITIAL_STATUS;
         },
         isUploaded(){
@@ -107,7 +107,7 @@ export default {
             console.log(this.percentage)                    
             fileReader.addEventListener('load', ()=>{                   
                 this.imageURL = fileReader.result
-                this.test = {'base64' : this.imageURL, 'percentage' : this.percentage,'namaFile' : this.fileUpload.name} 
+                this.test = {'base64' : this.imageURL, 'percentage' : this.percentage,'namaFile' : this.fileUpload.name} //Membuat data yang akan di send ke json
                 fetch('http://localhost:3000/image',{
                     method:'POST', //Upload file ke server json
                     headers:{'Content-Type':'application/json'},
@@ -121,7 +121,7 @@ export default {
         compress(){             //Fungsi yang dipanggil ketika tombol compress ditekan
             this.statusUpload = CONVERTING_STATUS
             this.startTimer()
-            axios.get(this.pathFlask,{ responseType: 'blob'})
+            axios.get(this.pathFlask,{ responseType: 'blob'})       //Melakukan request ke server flask
                 .then((res)=>{
                     this.stopTimer()
                     this.time = this.time /1000
