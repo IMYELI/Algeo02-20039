@@ -67,7 +67,8 @@ export default {
             pathJson: 'http://localhost:3000/image',
             test: {},
             time: 0,
-            timer: null
+            timer: null,
+            ext : ''
         }
     },
     computed:{
@@ -88,7 +89,7 @@ export default {
         }
     },
     methods:{
-        reset(){
+        reset(){                   //Digunakan untuk mereset semua state dan server json
             this.fileUpload=[];
             this.statusUpload = INITIAL_STATUS;
             this.time = 0
@@ -103,12 +104,12 @@ export default {
             this.statusUpload = UPLOADED_STATUS
             const fileReader = new FileReader()
             fileReader.readAsDataURL(this.fileUpload)
-            console.log(this.percentage)
-            fileReader.addEventListener('load', ()=>{
+            console.log(this.percentage)                    
+            fileReader.addEventListener('load', ()=>{                   
                 this.imageURL = fileReader.result
-                this.test = {'base64' : this.imageURL, 'percentage' : this.percentage,'namaFile' : this.fileUpload.name}
+                this.test = {'base64' : this.imageURL, 'percentage' : this.percentage,'namaFile' : this.fileUpload.name} 
                 fetch('http://localhost:3000/image',{
-                    method:'POST',
+                    method:'POST', //Upload file ke server json
                     headers:{'Content-Type':'application/json'},
                     body: JSON.stringify(this.test)
                 })
@@ -117,7 +118,7 @@ export default {
             
 
         },
-        compress(){
+        compress(){             //Fungsi yang dipanggil ketika tombol compress ditekan
             this.statusUpload = CONVERTING_STATUS
             this.startTimer()
             axios.get(this.pathFlask,{ responseType: 'blob'})
@@ -138,29 +139,30 @@ export default {
                 .catch(err=>{console.log(err.message),this.reset()})
 
         },
-        download(){
+        download(){             //Fungsi yang digunakan ketika tombol download ditekan
             var fileURL = window.URL.createObjectURL(this.fileGet)
             var fileLink = document.createElement('a')
             fileLink.href = fileURL
-            this.namafile2 = this.namafile.split('.').slice(0,-1).join('.')
-            this.namafile2 = this.namafile2 + '_Compressed.jpg'
+            this.namafile2 = this.namafile.split('.').slice(0,-1).join('.')    //Mengambil namafile
+            this.ext = this.namafile.substring(this.namafile.lastIndexOf('.') + 1) //Mengambil extension file
+            this.namafile2 = this.namafile2 + '_Compressed.'+this.ext   //Menambahkan compressed di belakang nama file
             fileLink.setAttribute('download',this.namafile2)
             document.body.appendChild(fileLink)
             fileLink.click()
         },
         startTimer(){
-            this.time = 0
+            this.time = 0           //Memulai timer
             this.timer = Date.now()
         },
         stopTimer(){
-            this.time = Date.now()-this.timer
+            this.time = Date.now()-this.timer       //memberhentikan timer
             clearInterval(this.timer)
         }
         
         
     },
     mounted(){
-        fetch('http://localhost:3000/image')
+        fetch('http://localhost:3000/image')        //Load data pada server json saat pertama kali website dinyalakan
             .then(res=>res.json())
             .then(data=>this.test = data)
             .catch(err=>console.log(err.message))
